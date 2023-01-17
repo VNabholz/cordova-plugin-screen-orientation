@@ -159,4 +159,25 @@
     
 }
 
+- (void) getScreenOrientation:(CDVInvokedUrlCommand*)command {
+
+    CDVPluginResult *pluginResult;
+
+    NSString * orientation = @"any";
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+    if (UIInterfaceOrientationIsPortrait(interfaceOrientation))
+    {
+        orientation = @"portrait";
+    }
+
+    if (UIInterfaceOrientationIsLandscape(interfaceOrientation))
+    {
+        orientation = @"landscape";
+    }
+
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:orientation];
+
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
 @end

@@ -31,5 +31,6 @@
 }
 
 - (void)screenOrientation:(CDVInvokedUrlCommand *)command;
+- (void)getScreenOrientation:(CDVInvokedUrlCommand*)command;
 
 @end

@@ -29,6 +29,7 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.util.Log;
 
 public class CDVOrientation extends CordovaPlugin {
@@ -56,14 +57,17 @@ public class CDVOrientation extends CordovaPlugin {
         if (action.equals("screenOrientation")) {
             return routeScreenOrientation(args, callbackContext);
         }
+        if (action.equals("getScreenOrientation")) {
+            return getScreenOrientation(callbackContext);
+        }
         
         // Action not found
         callbackContext.error("action not recognised");
         return false;
     }
-    
+
     private boolean routeScreenOrientation(JSONArray args, CallbackContext callbackContext) {
-        
+
         String action = args.optString(0);
         
         
@@ -92,7 +96,28 @@ public class CDVOrientation extends CordovaPlugin {
         
         callbackContext.success();
         return true;
-        
-        
     }
+
+        private boolean getScreenOrientation(CallbackContext callbackContext) {
+            Activity activity = cordova.getActivity();
+
+            int orientation = activity.getResources().getConfiguration().orientation;
+
+            String strOrientation = ANY;
+
+            if (orientation == Configuration.ORIENTATION_UNDEFINED) {
+                strOrientation = ANY;
+            }
+
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                strOrientation = LANDSCAPE;
+            }
+
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                strOrientation = PORTRAIT;
+            }
+
+            callbackContext.success(strOrientation);
+            return true;
+        }
 }

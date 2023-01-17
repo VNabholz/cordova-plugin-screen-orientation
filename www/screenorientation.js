@@ -47,6 +47,10 @@ screenOrientation.setOrientation = function (orientation) {
     cordova.exec(null, null, 'CDVOrientation', 'screenOrientation', [orientationMask, orientation]);
 };
 
+screenOrientation.getNativeOrientation = function (onSuccess, onError) {
+    cordova.exec(onSuccess, onError, 'CDVOrientation', 'getScreenOrientation', []);
+};
+
 if (!screen.orientation) {
     screen.orientation = {};
 }
